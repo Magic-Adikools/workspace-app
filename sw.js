@@ -1,13 +1,12 @@
 const CACHE = 'workspace-v1';
 const ASSETS = [
-  './',
-  './index.html',
-  './manifest.json',
-  './icon-192.png',
-  './icon-512.png'
+  '/workspace-app/',
+  '/workspace-app/index.html',
+  '/workspace-app/manifest.json',
+  '/workspace-app/icon-192.png',
+  '/workspace-app/icon-512.png'
 ];
 
-// Install — cache all assets
 self.addEventListener('install', e => {
   e.waitUntil(
     caches.open(CACHE).then(cache => cache.addAll(ASSETS))
@@ -15,7 +14,6 @@ self.addEventListener('install', e => {
   self.skipWaiting();
 });
 
-// Activate — remove old caches
 self.addEventListener('activate', e => {
   e.waitUntil(
     caches.keys().then(keys =>
@@ -25,7 +23,6 @@ self.addEventListener('activate', e => {
   self.clients.claim();
 });
 
-// Fetch — network first, fallback to cache
 self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
   e.respondWith(
