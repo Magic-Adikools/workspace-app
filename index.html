@@ -1488,7 +1488,7 @@ document.dispatchEvent(new Event('firebase-ready'));
 
 <script>
 const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-function load(k,d){try{return JSON.parse(localStorage.getItem(k))||d;}catch{return d;}}
+function load(k,d){try{const _v=JSON.parse(localStorage.getItem(k));return _v!==null&&_v!==undefined?_v:d;}catch{return d;}}
 function sv(k,v){localStorage.setItem(k,JSON.stringify(v));}
 let uid=load('uid',0);
 function nid(){uid++;sv('uid',uid);return uid;}
@@ -3971,10 +3971,10 @@ renderTasks();renderShopTabs();renderShop();renderKanban();updateMeta();
   }
 
   nextBtn.addEventListener('click', ()=> showStep(current + 1));
-  skipBtn.addEventListener('click', ()=> endTutorial(false));
+  skipBtn.addEventListener('click', ()=> endTutorial(true));
 
   // Click on backdrop also skips
-  document.getElementById('tut-backdrop').addEventListener('click', ()=> endTutorial(false));
+  document.getElementById('tut-backdrop').addEventListener('click', ()=> endTutorial(true));
 
   // Settings button
   document.getElementById('start-tutorial-btn').addEventListener('click', ()=>{
