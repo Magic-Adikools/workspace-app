@@ -4328,7 +4328,7 @@ renderTasks();renderShopTabs();renderShop();renderKanban();updateMeta();
   });
 
   // ---- DATA KEYS ----
-  const DATA_KEYS=['tasks','shopping','shopLists','shopItems','cards','notes','activeListId'];
+  const DATA_KEYS=['tasks','shopping','shopLists','shopItems','cards','notes','activeListId','showCats','appName','radius','compact','sortTasks','confirmDelete','uid','onboardingDone','tutorialDone','currentTheme','currentLang','currentFont','loginSkipped','pinEnabled','pinHash'];
 
   function gatherLocalData(){
     const d={};
@@ -4341,8 +4341,12 @@ renderTasks();renderShopTabs();renderShop();renderKanban();updateMeta();
 
   function applyRemoteData(data){
     if(!data) return;
+    // Keys that should only be set if not already true locally
+    const stickyTrueKeys=['tutorialDone','onboardingDone','loginSkipped'];
     DATA_KEYS.forEach(k=>{
       if(data[k]!==undefined&&data[k]!==null){
+        // Don't overwrite sticky keys if already true locally
+        if(stickyTrueKeys.includes(k)&&load(k,false)===true) return;
         localStorage.setItem(k,JSON.stringify(data[k]));
       }
     });
